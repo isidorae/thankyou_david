@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}Send your Message!{% endblock %}
+
+{% block body %}
+    <main class="d-flex flex-column align-items-center">
+        <h1 class="m-5">Choose your David!</h1>
+        <section class="container-fluid choose-img-container">
+            <div class="row text-center">
+                <div class="col-xs-1 col-sm-2 col-md-4 col-lg-4 img-card">
+                    <button class="select-img" >
+                        <img class="choose-img" src="/static/img/king-david.jpg" alt="king david"/>
+                    </button>
+                </div>
+                <div class="col-xs-1 col-sm-2 col-md-4 col-lg-4 img-card">
+                    <button class="select-img" href="#">
+                    <img class="choose-img" src="/static/img/matrix-david.jpg" alt="matrix david"/>
+                    </button>
+                </div>
+                <div class="col-xs-1 col-sm-2 col-md-4 col-lg-4 img-card">
+                    <button class="select-img" href="#">
+                    <img class="choose-img" src="/static/img/office-david.jpg" alt="office david"/>
+                    </button>
+                </div>
+                <div class="col-xs-1 col-sm-2 col-md-4 col-lg-4 img-card">
+                    <button class="select-img" href="#">
+                    <img class="choose-img" src="/static/img/wizard-david.jpg" alt="wizard david"/>
+                    </button>
+                </div>
+                <div class="col-xs-1 col-sm-2 col-md-4 col-lg-4 img-card">
+                    <button class="select-img" href="#">
+                    <img class="choose-img" src="/static/img/terminator-david.jpg" alt="terminator david"/>
+                    </button>
+                </div>
+            </div>
+        </section>
+        <button onclick="window.location.href='/saythanks/comment';">Continue</button>
+    </main>
+{% endblock %}

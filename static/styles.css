@@ -1,0 +1,135 @@
+body {
+    color: #fff;
+    background-color: RGBA(var(--bs-dark-rgb), var(--bs-bg-opacity, 1));
+}
+
+h1 {
+    font-family: 'Fugaz One', sans-serif;
+}
+
+footer {
+    height: 200px;
+    background-color: RGBA(var(--bs-dark-rgb), var(--bs-bg-opacity, 1));
+}
+
+.hp-main-container {
+    max-width: 400px;
+}
+
+.david-btn { 
+    border: 1px solid white;
+    background-color: transparent;
+}
+
+
+/* /saythanks */
+
+
+.choose-img {
+    width: 18rem;
+    height: auto;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.img-button {
+    width:18rem;
+    /* border: 2px solid white; */
+    position: relative;
+    border-radius: 10px;
+    padding: 0;
+
+}
+
+.form-container {
+    border: 2px solid white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.select-img {
+    padding: 0;
+    border: 0;
+    margin: 5px;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.select-img:focus {
+    background-color: rgb(47, 67, 249);
+}
+
+/* /saythanks/comment */
+.img-selected {
+    height: 5rem;
+    width: auto;
+    border: 1px solid white;
+    border-radius: 3px;
+}
+
+/* /comments */
+
+.box-comments-page {
+    max-width: 1300px;
+    height: auto;
+}
+
+
+.comment-container {
+max-width: 300px;
+border: 1.5px solid white;
+border-radius: 10px;
+}
+
+
+.comment-img {
+width: 10rem;
+height:auto;
+border: 1.5px solid white;
+border-radius: 3px;
+}
+
+
+.comment-p {
+    text-align: start;
+    background-color: rgb(87, 87, 228);
+    border: 1.5px solid white;
+    padding: 10px;
+    border-radius: 10px;
+
+}
+
+.bi-star {
+    color: black;
+    background-color: white;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+@media (min-width: 550px) {
+    .grid-comment-container {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (min-width: 600px) {
+    .grid-comment-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (min-width: 750px) {
+    .grid-comment-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr)
+    }
+}
+
+@media (min-width: 1200px) {
+    .grid-comment-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr)
+    }
+}
