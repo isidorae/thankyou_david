@@ -2,9 +2,15 @@
 # flask --app app.py --debug run
 from cs50 import SQL
 from flask import Flask, jsonify, render_template, request, redirect
+from flask_session import Session
 from datetime import date
 
 app = Flask(__name__)
+
+# Configure session to use filesystem (instead of signed cookies)
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 db = SQL("sqlite:///thankyou.db")
 
