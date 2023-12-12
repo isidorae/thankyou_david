@@ -12,6 +12,17 @@ footer {
     background-color: RGBA(var(--bs-dark-rgb), var(--bs-bg-opacity, 1));
 }
 
+a {
+    text-decoration: none;
+    color: rgb(99, 99, 255);
+}
+
+.intro-container {
+    max-width: 1000px;
+    min-width: 350px;
+    padding: 3rem;
+}
+
 .hp-main-container {
     max-width: 400px;
 }
@@ -21,7 +32,20 @@ footer {
     background-color: transparent;
 }
 
+.bi-person-square {
+    color: white;
+}
 
+.stndr-btn {
+    background-color: transparent;
+    border: 2px solid white;
+    padding: 0.2rem 1rem ;
+    color: white;
+}
+
+.stndr-btn:active {
+    border: 2px solid rgb(57, 228, 57);
+}
 /* /saythanks */
 
 
@@ -134,6 +158,22 @@ border-radius: 3px;
     background-color: rgb(87, 87, 228);
     color: white;
 }
+
+
+/* LOGIN / REGISTER FORMS */
+.login-form-container {
+    width: 350px;
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 2rem;
+}
+
+.data-container {
+    border: 2px solid white;
+    padding: 4rem;
+    border-radius: 10px;
+}
+
 
 
 /* MEDIA QUERIES */
