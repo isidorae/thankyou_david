@@ -1,39 +1,73 @@
 {% extends "layout.html" %}
 
+{% block nav %}
+<li class="nav-item">
+    <a class="nav-link" aria-current="page" href="/">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" class="nav-link" href="/saythanks">Say Thanks!</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/messages">Comments</a>
+  </li>
+  <li class="nav-item align-self-end">
+    <a class="nav-link" href="#">Login</a>
+  </li>
+{% endblock %}
+
 {% block title %}Send your Message!{% endblock %}
 
 {% block body %}
     <main class="d-flex flex-column align-items-center">
         <h1 class="m-5">Choose your David!</h1>
-        <section class="container-fluid choose-img-container">
+        <section class="container-fluid grid gap-5">
             <div class="row text-center">
                 <div class="col-xs-1 col-sm-2 col-md-4 col-lg-4 img-card">
-                    <button class="select-img" >
-                        <img class="choose-img" src="/static/img/king-david.jpg" alt="king david"/>
+                    <button id="king-david-btn" onclick="selectedImg(this)" class="select-img" >
+                        <img id="king-david" class="choose-img" src="/static/img/king-david.jpg" alt="king david"/>
                     </button>
                 </div>
                 <div class="col-xs-1 col-sm-2 col-md-4 col-lg-4 img-card">
-                    <button class="select-img" href="#">
-                    <img class="choose-img" src="/static/img/matrix-david.jpg" alt="matrix david"/>
+                    <button id="matrix-david-btn" onclick="selectedImg(this)" class="select-img" href="#">
+                    <img id="matrix-david" class="choose-img" src="/static/img/matrix-david.jpg" alt="matrix david"/>
                     </button>
                 </div>
                 <div class="col-xs-1 col-sm-2 col-md-4 col-lg-4 img-card">
-                    <button class="select-img" href="#">
-                    <img class="choose-img" src="/static/img/office-david.jpg" alt="office david"/>
+                    <button id="office-david-btn" onclick="selectedImg(this)" class="select-img" href="#">
+                    <img id="office-david" class="choose-img" src="/static/img/office-david.jpg" alt="office david"/>
                     </button>
                 </div>
                 <div class="col-xs-1 col-sm-2 col-md-4 col-lg-4 img-card">
-                    <button class="select-img" href="#">
-                    <img class="choose-img" src="/static/img/wizard-david.jpg" alt="wizard david"/>
+                    <button id="wizard-david-btn" onclick="selectedImg(this)" class="select-img" href="#">
+                    <img id="wizard-david" class="choose-img" src="/static/img/wizard-david.jpg" alt="wizard david"/>
                     </button>
                 </div>
                 <div class="col-xs-1 col-sm-2 col-md-4 col-lg-4 img-card">
-                    <button class="select-img" href="#">
-                    <img class="choose-img" src="/static/img/terminator-david.jpg" alt="terminator david"/>
+                    <button id="terminator-david-btn" onclick="selectedImg(this)" class="select-img" href="#">
+                    <img id="terminator-david" class="choose-img" src="/static/img/terminator-david.jpg" alt="terminator david"/>
                     </button>
                 </div>
             </div>
         </section>
-        <button onclick="window.location.href='/saythanks/comment';">Continue</button>
+        <section class="d-flex flex-column justify-content-center m-5">
+            <h2>Or choose a random David!</h2>
+            <button onclick="getRandomImg()">Random!</button>
+        </section>
+        <div class="d-flex flex-column align-items-center">
+            <h2>Write Your Message! </h2>
+            <section class="form-container">
+                <div class="mb-3">
+                    <img id="mini-img-preview" class="img-selected" src="/static/img/default-img.jpg" />
+                        <form action="/send" method="post">
+                            <input name="img" id="img-input" type="hidden" value="none">
+                            <label class="form-label mt-2">Name</label>
+                            <input name="name" type="text" class="form-control" placeholder="Name" maxlength="25">
+                            <label class="form-label">Make a Comment!</label>
+                            <textarea name="comment" class="form-control" placeholder="Comment" rows="3" maxlength="280"></textarea>
+                            <button type="submit">Send!</button>
+                        </form>
+                  </div>
+            </section>
+        </div>
     </main>
 {% endblock %}

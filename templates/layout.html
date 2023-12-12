@@ -24,18 +24,20 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
+              {% block nav %}
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">Home</a>
+                <a class="nav-link" aria-current="page" href="/">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/saythanks">Say Thanks!</a>
+                <a class="nav-link active" href="/saythanks">Say Thanks!</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/comments">Comments</a>
+                <a class="nav-link" href="/messages">Comments</a>
               </li>
               <li class="nav-item align-self-end">
                 <a class="nav-link" href="#">Login</a>
               </li>
+              {% endblock %}
             </ul>
           </div>
         </div>
@@ -43,5 +45,6 @@
     {% block body %}{% endblock %}
     <!-- footer -->
     <footer></footer>
+    <script src="/static/main.js"></script>
 </body>
 </html>
