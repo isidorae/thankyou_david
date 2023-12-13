@@ -2,11 +2,15 @@ d = document;
 
 d.addEventListener("load", fetchMessages())
 
+let arrayOfMsgs;
+
+
 // *********************************** fetch data 
 async function fetchMessages() {
 
     let res = await fetch('/messages/api')
     let messages = await res.json()
+    arrayOfMsgs = await messages;
     console.log(messages)
     loadMessages(messages)
 
@@ -17,14 +21,17 @@ let navPagination = d.getElementById("pagination-btns");
 let messagesContainer = d.getElementById("messages-wrapper");
 
 let pageIndex = 0;
-let itemsPerPage = 10; 
+let itemsPerPage = 3; 
 
 // *********************************** load messages according to items per page limit
 function loadMessages(messages) {
 
         html = '';
+        const startIndex = pageIndex*itemsPerPage;
+        const endIndex = Math.min((pageIndex + 1) * itemsPerPage, messages.length);
 
-        for (let i = pageIndex*itemsPerPage; i < (pageIndex*itemsPerPage) + itemsPerPage; i++) {
+        // (let i = startIndex; i < (startIndex) + itemsPerPage; i++)
+        for (let i = startIndex; i < endIndex; i++) {
             if (!messages) {
                 break;
             }
@@ -44,13 +51,14 @@ function loadMessages(messages) {
                     </div>
                     <p class="comment-p">${messages[i].comment}</p>
                     <p><small><i>${messages[i].date}</i></small></p>
+                    <p><small><i>${messages[i].time}</i></small></p>
                 </section>
             </div>
         </div>`;
 
-        messagesContainer.innerHTML = html;
-
         }
+
+        messagesContainer.innerHTML = html;
 
         //update navigation each time new page contest is loaded
         if (messages.length >= itemsPerPage) {

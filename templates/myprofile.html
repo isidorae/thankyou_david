@@ -25,7 +25,10 @@
                       <p class="align-self-center">{{ comment["comment"] }}</p>
                     </div>
                     <div class="align-self-center">
-                      <button class="m-auto delete-btn">X</button>
+                      <form action="/delete-comment" method="post">
+                        <input name="comment_id" type="hidden" value="{{ comment['id'] }}">
+                        <button type="submit" class="ms-2 delete-btn">X</button>
+                      </form>
                     </div>
                   </div>
                   {% endfor %}

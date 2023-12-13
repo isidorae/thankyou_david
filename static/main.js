@@ -81,3 +81,7 @@ function showPreviewImg(data) {
 if (window.location.href.match('/saythanks') != null) {
    console.log(img_input.value)
    }
+
+function redirectSayThanks() {
+    window.location = "/saythanks";
+}

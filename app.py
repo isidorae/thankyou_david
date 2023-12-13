@@ -1,13 +1,9 @@
 #. .venv/bin/activate
 # flask --app app.py --debug run
-# pip install pep517
-import os
-
 from cs50 import SQL
 from flask import Flask, jsonify, render_template, session, request, redirect
 from flask_session import Session
-from datetime import date
-import hashlib
+from datetime import date, datetime 
 import bcrypt
 
 app = Flask(__name__)
@@ -29,13 +25,11 @@ def chooseImg():
 
 @app.route("/messages")
 def checkComments():
-    messages = db.execute("SELECT * FROM messages ORDER BY date")
-    print(messages)
-    return render_template("comments.html", messages=messages)
+    return render_template("comments.html")
 
 @app.route("/messages/api")
 def loadComments():
-    messages = db.execute("SELECT * FROM messages ORDER BY date DESC")
+    messages = db.execute("SELECT * FROM messages ORDER BY date DESC, time DESC")
     return jsonify(messages)
 
 @app.route("/send", methods=["POST"])
@@ -46,7 +40,10 @@ def sendComment():
 
     # get date
     date_now = date.today()
-
+    # get time
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    time_now = current_time
 
     if name == "" or comment == "" or img =="none":
         print("All fields must be filled")
@@ -54,7 +51,7 @@ def sendComment():
 
     else:
         print(img, name, comment)
-        db.execute("INSERT INTO messages (name, comment, img, date, user_id) VALUES (?, ?, ?, ?, ?)", name, comment, img, date_now, session["user_id"])
+        db.execute("INSERT INTO messages (name, comment, img, date, time, user_id) VALUES (?, ?, ?, ?, ?, ?)", name, comment, img, date_now, time_now, session["user_id"])
         return redirect("/messages")
 
     # https://api.github.com/users/{username}}
@@ -64,6 +61,22 @@ def myprofile():
     userData = db.execute("SELECT * FROM users WHERE id=?", session["user_id"])
     userComments = db.execute("SELECT * FROM messages WHERE user_id=?", session["user_id"])
     print(userData[0])
+    return render_template("myprofile.html", userData=userData, userComments=userComments)
+
+@app.route("/delete-comment", methods=["POST"])
+def deleteComment():
+    comment_id = request.form.get("comment_id")
+
+    find_comment = db.execute("SELECT * FROM messages WHERE id=?", comment_id)
+    if not find_comment:
+        message="Comment not found."
+        err="403"
+        return render_template("err/invalid_login.html", message=message, err=err)
+
+    db.execute("DELETE FROM messages WHERE id=?", comment_id)
+    userData = db.execute("SELECT * FROM users WHERE id=?", session["user_id"])
+    userComments = db.execute("SELECT * FROM messages WHERE user_id=?", session["user_id"])
+    
     return render_template("myprofile.html", userData=userData, userComments=userComments)
 
 @app.route("/error")
@@ -101,7 +114,7 @@ def login():
         if len(usernameInDB) != 1: 
             message="Username not found in database."
             err="403"
-            return render_template("err/invalid_login.html")
+            return render_template("err/invalid_login.html", message=message, err=err)
 
         # check password hash
         check_password_hash = bcrypt.checkpw(password.encode(), hash_password)
@@ -109,7 +122,7 @@ def login():
         if not check_password_hash:
             message="Incorrect password."
             err="403"
-            return render_template("err/invalid_login.html")
+            return render_template("err/invalid_login.html", message=message, err=err)
 
         # Remember which user has logged in -> keep track of info; store current user ID
         session["user_id"] = usernameInDB[0]["id"]
