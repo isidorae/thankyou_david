@@ -23,18 +23,32 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-              {% block nav %}
+            <ul class="navbar-nav ms-auto align-items-center">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="/">&Hopf;ome</a>
+                <a class="nav-link" aria-current="page" href="/">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="/saythanks">Say Thanks!&#9825;</a>
+                <a class="nav-link" href="/saythanks">Say Thanks!&#9825;</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/messages">Mes&Hfr;ages&#9786;</a>
+                <a class="nav-link" href="/messages">Messages&#9786;</a>
               </li>
-              <li class="nav-item align-self-end">
+              {% if session["user_id"] %}
+              <li class="nav-item">
+                <a class="nav-link" href="/myprofile">
+                  <svg xmlns="http://www.w3.org/2000/svg" title="profile" width="25" height="25" fill="currentColor" class="bi bi-person-square" viewBox="0 0 16 16">
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                    <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1v-1c0-1-1-4-6-4s-6 3-6 4v1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+                  </svg>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/logout">
+                  <button class="bi-door-closed"><small>Logout</small></button>
+                </a>
+              </li>
+              {% else %}
+              <li class="nav-item">
                 <a class="nav-link" href="/login">
                   <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-square" viewBox="0 0 16 16">
                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
@@ -42,14 +56,16 @@
                   </svg>
                 </a>
               </li>
-              {% endblock %}
+              {% endif %}
             </ul>
           </div>
         </div>
       </nav>
     {% block body %}{% endblock %}
     <!-- footer -->
-    <footer></footer>
+    <footer class="d-flex justify-content-center align-items-center">
+      <small>CS50 Final Proyect &#9733; For inquiries isidora.axis@gmail.com </small>
+    </footer>
     <script src="/static/main.js"></script>
 </body>
 </html>

@@ -1,10 +1,14 @@
 #. .venv/bin/activate
 # flask --app app.py --debug run
+# pip install pep517
+import os
+
 from cs50 import SQL
 from flask import Flask, jsonify, render_template, session, request, redirect
 from flask_session import Session
 from datetime import date
-from werkzeug.security import check_password_hash, generate_password_hash
+import hashlib
+import bcrypt
 
 app = Flask(__name__)
 
@@ -50,14 +54,17 @@ def sendComment():
 
     else:
         print(img, name, comment)
-        db.execute("INSERT INTO messages (name, comment, img, date) VALUES (?, ?, ?, ?)", name, comment, img, date_now)
+        db.execute("INSERT INTO messages (name, comment, img, date, user_id) VALUES (?, ?, ?, ?, ?)", name, comment, img, date_now, session["user_id"])
         return redirect("/messages")
 
     # https://api.github.com/users/{username}}
 
 @app.route("/myprofile")
 def myprofile():
-    return render_template("myprofile.html")
+    userData = db.execute("SELECT * FROM users WHERE id=?", session["user_id"])
+    userComments = db.execute("SELECT * FROM messages WHERE user_id=?", session["user_id"])
+    print(userData[0])
+    return render_template("myprofile.html", userData=userData, userComments=userComments)
 
 @app.route("/error")
 def errormsg():
@@ -69,39 +76,46 @@ def errormsg():
 ################################ LOGIN
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    username = request.form.get("username")
+    password = request.form.get("password")
 
     # Forget any user_id
     session.clear()
 
     if request.method == "POST":
-        if not request.form.get("username") or not request.form.get("password"):
+        if not username or not password:
             message="Must enter a valid username & password"
             err="403"
             return render_template("err/login_form_error.html", message=message, err=err)
 
         # find username in db
-        rows = db.execute(
-            "SELECT * FROM users WHERE username = ?", request.form.get("username")
+        usernameInDB = db.execute(
+            "SELECT * FROM users WHERE username = ?", username
         )
 
+        # select password of username
+        hash_password = usernameInDB[0]["hash"]
+
+        print(hash_password)
         # Ensure username exists (WE MUST GET ONLY 1 ROW = 1 UNIQUE USERNAME) and password is correct
-        if len(rows) != 1: 
+        if len(usernameInDB) != 1: 
             message="Username not found in database."
             err="403"
             return render_template("err/invalid_login.html")
-        
-        if not check_password_hash(
-            rows[0]["hash"], request.form.get("password")
-        ):
+
+        # check password hash
+        check_password_hash = bcrypt.checkpw(password.encode(), hash_password)
+
+        if not check_password_hash:
             message="Incorrect password."
             err="403"
             return render_template("err/invalid_login.html")
 
         # Remember which user has logged in -> keep track of info; store current user ID
-        session["user_id"] = rows[0]["id"]
+        session["user_id"] = usernameInDB[0]["id"]
 
         # Redirect user to home page
-        return redirect("/")
+        return redirect("/saythanks")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -128,7 +142,7 @@ def register():
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
-        passconfirm = request.form.get("confirmation")
+        passconfirm = request.form.get("passconfirm")
 
         # Ensure username was submitted
         if not username:
@@ -154,8 +168,13 @@ def register():
             err= "400"
             return render_template("err/register_form_err.html", message=message, err=err)
 
+
+        # Generate a salt
+        salt = bcrypt.gensalt() 
+
         # hash password
-        hash = generate_password_hash(password)
+        hash = bcrypt.hashpw(password.encode(), salt)
+        print(hash)
 
         # insert data in users table
         db.execute("INSERT INTO users (username, hash) VALUES (?, ?)", username, hash)

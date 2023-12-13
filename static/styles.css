@@ -3,18 +3,27 @@ body {
     background-color: RGBA(var(--bs-dark-rgb), var(--bs-bg-opacity, 1));
 }
 
+main {
+    min-height: 100vh;
+}
+
 h1, h2, h3 {
     font-family: 'Fugaz One', sans-serif;
 }
 
 footer {
-    height: 200px;
+    height: 50px;
     background-color: RGBA(var(--bs-dark-rgb), var(--bs-bg-opacity, 1));
+    color: rgb(196, 196, 196);
 }
 
 a {
     text-decoration: none;
     color: rgb(99, 99, 255);
+}
+
+.blue-font {
+    color: rgb(165, 176, 255);
 }
 
 .intro-container {
@@ -43,8 +52,19 @@ a {
     color: white;
 }
 
+.delete-btn {
+    background-color: transparent;
+    border: 2px solid red;
+    padding: 0.2rem 1rem ;
+    color: red;
+}
+
 .stndr-btn:active {
     border: 2px solid rgb(57, 228, 57);
+}
+
+.delete-btn:active {
+    border: 2px solid rgb(255, 255, 255);
 }
 /* /saythanks */
 
@@ -92,6 +112,10 @@ a {
 }
 
 /* /comments */
+
+.box-comments-page {
+    min-height: 100vh;
+}
 
 .comment-container {
 max-width: 300px;
@@ -168,12 +192,32 @@ border-radius: 3px;
     padding: 2rem;
 }
 
+.bi-door-closed {
+    background-color: transparent;
+    border: 1.5px solid white;
+    border-radius: 5px;
+}
+
+/* MY PROFILE */
+
 .data-container {
     border: 2px solid white;
     padding: 4rem;
     border-radius: 10px;
 }
 
+.profile-msg-img {
+    width: 3rem;
+    height: 3rem;
+    border: 1.5px solid white;
+    border-radius: 4px;
+}
+
+.my-msg-card {
+    max-width: 400px;
+    border: 1.5px solid white;
+    border-radius: 6px;
+}
 
 
 /* MEDIA QUERIES */

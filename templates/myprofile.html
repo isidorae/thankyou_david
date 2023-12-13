@@ -1,25 +1,5 @@
 {% extends "layout.html" %}
 
-{% block nav %}
-<li class="nav-item">
-    <a class="nav-link" aria-current="page" href="/">&Hopf;ome</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" class="nav-link" href="/saythanks">Say Thanks!&#9825;</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="/messages">Mes&Hfr;ages&#9786;</a>
-  </li>
-  <li class="nav-item align-self-end">
-    <a class="nav-link" href="/login">
-      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-square" viewBox="0 0 16 16">
-        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-        <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1v-1c0-1-1-4-6-4s-6 3-6 4v1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
-      </svg>
-    </a>
-  </li>
-{% endblock %}
-
 {% block title %}My Profile{% endblock %}
 
 {% block body %}
@@ -30,13 +10,26 @@
           </svg>
           <small class="text-center mb-3">If you sent a message just for testing, here you can delete it. <br> Be sure to send a real one if you know who David is!</small>
           <div class="data-container d-flex flex-column align-items-center justify-content-center">
-            <section class="align-self-start">
-                <p><b>Username:</b></p>
-                <p>Here goes username</p>
+            <section class="d-flex align-self-start">
+                <p class="me-2 blue-font"><b>Username</b></p>
+                <p>{{ userData[0]["username"]}}</p>
             </section>
             <section class="align-self-start">
-                <p><b>My Messages:</b></p>
-                <section>messages</section>
+                <p class="blue-font"><b>My Messages</b></p>
+                <section>
+                  {% for comment in userComments %}
+                  <div class="my-msg-card d-flex align-items-start justify-content-between mt-2 p-2">
+                    <div class="d-flex">
+                      <img class="profile-msg-img align-self-center me-3" src="{{ comment['img'] }}">
+                      <p class="me-3 align-self-center"><b>{{ comment["name"] }}</b></p>
+                      <p class="align-self-center">{{ comment["comment"] }}</p>
+                    </div>
+                    <div class="align-self-center">
+                      <button class="m-auto delete-btn">X</button>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </section>
             </section>
       </div>
     </main>
