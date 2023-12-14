@@ -5,8 +5,8 @@
 {% block title %}ERROR{% endblock %}
 
 {% block body %}
-  <div class="error-form-msg d-flex align-items-center justify-content-center">
-   <h1 style="color: red;">ERROR /{{ err }}/</h1>
+<div class="error-layout mt-5 error-form-msg d-flex flex-column align-items-center">
+   <h1 class="mt-5" style="color: red;">ERROR /{{ err }}/</h1>
    <h3>{{ message }}</h3>
   </div>  
 {% endblock %}

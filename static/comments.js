@@ -2,17 +2,27 @@ d = document;
 
 d.addEventListener("load", fetchMessages())
 
-let arrayOfMsgs;
+function showSpinner() {
+    spinner = d.getElementById("msg-spinner")
+    return spinner.style.display = 'inline-block';
+}
 
+function hideSpinner() {
+    spinner = d.getElementById("msg-spinner")
+    return spinner.style.display = 'none';
+}
+
+let arrayOfMsgs;
 
 // *********************************** fetch data 
 async function fetchMessages() {
-
+    showSpinner()
     let res = await fetch('/messages/api')
     let messages = await res.json()
     arrayOfMsgs = await messages;
     console.log(messages)
     loadMessages(messages)
+    hideSpinner()
 
 }
 
@@ -21,16 +31,16 @@ let navPagination = d.getElementById("pagination-btns");
 let messagesContainer = d.getElementById("messages-wrapper");
 
 let pageIndex = 0;
-let itemsPerPage = 3; 
+let itemsPerPage = 20; 
 
 // *********************************** load messages according to items per page limit
 function loadMessages(messages) {
 
         html = '';
         const startIndex = pageIndex*itemsPerPage;
+        // iterate up to the minimum of the calculated end index and the length of the messages array.
         const endIndex = Math.min((pageIndex + 1) * itemsPerPage, messages.length);
 
-        // (let i = startIndex; i < (startIndex) + itemsPerPage; i++)
         for (let i = startIndex; i < endIndex; i++) {
             if (!messages) {
                 break;
@@ -51,7 +61,6 @@ function loadMessages(messages) {
                     </div>
                     <p class="comment-p">${messages[i].comment}</p>
                     <p><small><i>${messages[i].date}</i></small></p>
-                    <p><small><i>${messages[i].time}</i></small></p>
                 </section>
             </div>
         </div>`;

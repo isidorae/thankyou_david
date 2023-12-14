@@ -5,6 +5,7 @@ let matrixBtn = d.getElementById("matrix-david-btn")
 let officeBtn = d.getElementById("office-david-btn")
 let wizardBtn = d.getElementById("wizard-david-btn")
 let terminatorBtn = d.getElementById("terminator-david-btn")
+let fiftyvilleBtn = d.getElementById("fiftyville-david-btn")
 
 let img_input = d.getElementById("img-input") // FORM DATA
 
@@ -13,10 +14,11 @@ const KING_DAVID = "https://res.cloudinary.com/drd6awxrl/image/upload/v170230154
 const MATRIX_DAVID = "https://res.cloudinary.com/drd6awxrl/image/upload/v1702301543/matrix-david_adcnc0.jpg"
 const OFFICE_DAVID = "https://res.cloudinary.com/drd6awxrl/image/upload/v1702301543/office-david_pufkxs.jpg"
 const WIZARD_DAVID = "https://res.cloudinary.com/drd6awxrl/image/upload/v1702301542/wizard-david_x39gcx.jpg"
+const FIFTYVILLE_TEAM = "https://res.cloudinary.com/drd6awxrl/image/upload/v1702507508/fiftyville-team_ug3ww1.jpg"
 
 let imageSelected;
 
-let randomDavid = [TERMINATOR_DAVID, KING_DAVID, MATRIX_DAVID, OFFICE_DAVID, WIZARD_DAVID]
+let randomDavid = [TERMINATOR_DAVID, KING_DAVID, MATRIX_DAVID, OFFICE_DAVID, WIZARD_DAVID, FIFTYVILLE_TEAM]
 
 function getRandomImg() {
     //random index value
@@ -43,26 +45,28 @@ function selectedImg(img){
         imageSelected = WIZARD_DAVID;
         setImgInputValue(imageSelected)
         showPreviewImg(imageSelected)
-        return console.log(imageSelected) 
     }
     if (img_id == "office-david"){
         imageSelected = OFFICE_DAVID;
         setImgInputValue(imageSelected)
         showPreviewImg(imageSelected)
-        return console.log(img_input.value)
     }
     if (img_id == "matrix-david"){
         imageSelected = MATRIX_DAVID;
         setImgInputValue(imageSelected)
         showPreviewImg(imageSelected)
-        return console.log(img_input.value)
     }
     if (img_id == "king-david"){
         imageSelected = KING_DAVID;
         setImgInputValue(imageSelected)
         showPreviewImg(imageSelected)
-        return console.log(img_input.value)
     }
+    if (img_id == "fiftyville-david"){
+        imageSelected = FIFTYVILLE_TEAM;
+        setImgInputValue(imageSelected)
+        showPreviewImg(imageSelected)
+    }
+
     else {
         return false; 
     }

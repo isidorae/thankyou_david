@@ -1,10 +1,13 @@
 {% extends "layout.html" %}
 
-{% block title %}Say Thanks!{% endblock %}
+{% block title %}Messages{% endblock %}
 
 {% block body %}
     <div class="box-comments-page d-flex flex-column align-items-center justify-content-center">
-        <h1 class="m-5">Messages Section</h1>
+        <h1 class="m-5">Messages</h1>
+        <div id="msg-spinner" class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
         <section id="messages-wrapper" class="grid-comment-container"></section>
         <section id="pagination-btns"></section>
     </div>

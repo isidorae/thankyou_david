@@ -16,7 +16,10 @@
             </section>
             <section class="align-self-start">
                 <p class="blue-font"><b>My Messages</b></p>
-                <section>
+                <div id="profile-spinner" class="spinner-border" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <section id="comments-section" style="display:none;">
                   {% for comment in userComments %}
                   <div class="my-msg-card d-flex align-items-start justify-content-between mt-2 p-2">
                     <div class="d-flex">
@@ -36,4 +39,16 @@
             </section>
       </div>
     </main>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+              fetch('/myprofile')
+                .then(response => response.text())
+                .then(data => {
+                  document.getElementById("profile-spinner").style.display = "none";
+                  document.getElementById('comments-section').style.display = 'block';
+                })
+                .catch(error => console.log('Error:', error));
+        })
+    </script>
 {% endblock %}

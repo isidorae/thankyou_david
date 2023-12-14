@@ -1,17 +1,23 @@
 {% extends "layout.html" %}
 
-{% block title %}Say Thanks!{% endblock %}
+{% block title %}Thank you David!{% endblock %}
 
 {% block body %}
     <main class="d-flex justify-content-center">
-      <div class="intro-container d-flex flex-column align-items-center justify-content-center">
+      <div class="intro-container d-flex flex-column align-items-center mt-5">
         <h1 class="mb-5 text-center">A place to share your gratitude towards David and CS50's Team!</h1>
         <section class="hp-main-container">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Qui quia, eaque alias, incidunt dignissimos quaerat nostrum voluptates 
-                rerum impedit voluptatum atque dicta fugiat itaque ut doloribus molestiae iure, 
-                iusto placeat.</p>
+            <div>
+            <p>CS50, also known as Introduction to Computer Science from Harvard, 
+              is one of the greatest and most comprehensive computer science courses you will ever have access to,
+               especially if you are fortunate enough to have David Malan as your teacher. 
+               Whether you attend online or in person, 
+               David's highly energetic lectures will inspire you to learn and continue practicing.</p>
             <button class="stndr-btn" value="redirect" onclick="redirectSayThanks()">Say Thanks!</button>
+            </div>
+            <div>
+              <img class="allright-david" src="/static/img/david-home-image.png" alt="all right david">
+            </div>
         </section>
       </div>
     </main>

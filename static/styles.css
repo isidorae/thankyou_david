@@ -22,6 +22,11 @@ a {
     color: rgb(99, 99, 255);
 }
 
+.logo {
+    height: 4rem;
+    width: auto;
+}
+
 .blue-font {
     color: rgb(165, 176, 255);
 }
@@ -66,6 +71,16 @@ a {
 .delete-btn:active {
     border: 2px solid rgb(255, 255, 255);
 }
+
+.allright-david {
+    height: 20rem;
+    width:auto;
+}
+
+.error-layout {
+    min-height: 80vh;
+}
+
 /* /saythanks */
 
 
@@ -185,6 +200,11 @@ border-radius: 3px;
 
 
 /* LOGIN / REGISTER FORMS */
+
+.sign-register-container {
+    min-height: 100vh;
+}
+
 .login-form-container {
     width: 350px;
     border: 2px solid white;

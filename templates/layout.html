@@ -9,16 +9,19 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <!-- google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap" rel="stylesheet">
     <!-- favicon -->
+    <link rel="icon" href="/static/img/tydavid-favicon.jpg" class="rel">
     <link rel="stylesheet" href="/static/styles.css" class="rel">
 </head>
 <body>
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark" >
         <div class="container-fluid">
-          {% block navtitle %}<a class="navbar-brand" href="/"><h3>Thank you David!</h3></a> {% endblock %}
+          {% block navtitle %}<a class="navbar-brand" href="/">
+            <img class="logo" src="/static/img/tydavid-logo.png" />
+          </a> {% endblock %}
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>

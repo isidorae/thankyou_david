@@ -6,6 +6,8 @@ from flask_session import Session
 from datetime import date, datetime 
 import bcrypt
 
+from helpers import login_required
+
 app = Flask(__name__)
 
 # Configure session to use filesystem (instead of signed cookies)
@@ -33,6 +35,7 @@ def loadComments():
     return jsonify(messages)
 
 @app.route("/send", methods=["POST"])
+@login_required
 def sendComment():
     img = request.form.get("img")
     name = request.form.get("name")
@@ -45,18 +48,25 @@ def sendComment():
     current_time = now.strftime("%H:%M:%S")
     time_now = current_time
 
-    if name == "" or comment == "" or img =="none":
+    if name == "" or comment == "":
+        err = "400"
+        message = "Must add name and comment."
         print("All fields must be filled")
-        return render_template("err/comment_form_err.html")
+        return render_template("err/err_layout.html", err=err, message=message)
+    
+    if img == "none":
+        err = "400"
+        message = "Must select an image."
+        print("All fields must be filled")
+        return render_template("err/err_layout.html", err=err, message=message)
 
     else:
         print(img, name, comment)
         db.execute("INSERT INTO messages (name, comment, img, date, time, user_id) VALUES (?, ?, ?, ?, ?, ?)", name, comment, img, date_now, time_now, session["user_id"])
         return redirect("/messages")
 
-    # https://api.github.com/users/{username}}
-
 @app.route("/myprofile")
+@login_required
 def myprofile():
     userData = db.execute("SELECT * FROM users WHERE id=?", session["user_id"])
     userComments = db.execute("SELECT * FROM messages WHERE user_id=?", session["user_id"])
@@ -64,6 +74,7 @@ def myprofile():
     return render_template("myprofile.html", userData=userData, userComments=userComments)
 
 @app.route("/delete-comment", methods=["POST"])
+@login_required
 def deleteComment():
     comment_id = request.form.get("comment_id")
 
@@ -71,17 +82,13 @@ def deleteComment():
     if not find_comment:
         message="Comment not found."
         err="403"
-        return render_template("err/invalid_login.html", message=message, err=err)
+        return render_template("err/err_layout.html", message=message, err=err)
 
     db.execute("DELETE FROM messages WHERE id=?", comment_id)
     userData = db.execute("SELECT * FROM users WHERE id=?", session["user_id"])
     userComments = db.execute("SELECT * FROM messages WHERE user_id=?", session["user_id"])
     
     return render_template("myprofile.html", userData=userData, userComments=userComments)
-
-@app.route("/error")
-def errormsg():
-    return render_template("err/comment_form_err.html")
 
 
 ################################################################ AUTH ################################################################
@@ -99,22 +106,21 @@ def login():
         if not username or not password:
             message="Must enter a valid username & password"
             err="403"
-            return render_template("err/login_form_error.html", message=message, err=err)
+            return render_template("err/err_layout.html", message=message, err=err)
 
         # find username in db
         usernameInDB = db.execute(
             "SELECT * FROM users WHERE username = ?", username
         )
 
-        # select password of username
-        hash_password = usernameInDB[0]["hash"]
-
-        print(hash_password)
         # Ensure username exists (WE MUST GET ONLY 1 ROW = 1 UNIQUE USERNAME) and password is correct
         if len(usernameInDB) != 1: 
             message="Username not found in database."
             err="403"
-            return render_template("err/invalid_login.html", message=message, err=err)
+            return render_template("err/err_layout.html", message=message, err=err)
+
+        # select password of username
+        hash_password = usernameInDB[0]["hash"]
 
         # check password hash
         check_password_hash = bcrypt.checkpw(password.encode(), hash_password)
@@ -122,13 +128,13 @@ def login():
         if not check_password_hash:
             message="Incorrect password."
             err="403"
-            return render_template("err/invalid_login.html", message=message, err=err)
+            return render_template("err/err_layout.html", message=message, err=err)
 
         # Remember which user has logged in -> keep track of info; store current user ID
         session["user_id"] = usernameInDB[0]["id"]
 
-        # Redirect user to home page
-        return redirect("/saythanks")
+        # Redirect user to profile
+        return redirect("/myprofile")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -161,25 +167,25 @@ def register():
         if not username:
             message = "Must fill out all fields."
             err= "400"
-            return render_template("err/register_form_err.html", message=message, err=err)
+            return render_template("err/err_layout.html", message=message, err=err)
 
         # Ensure password was submitted
         elif not password or not passconfirm:
             message = "Must fill out all fields."
             err= "400"
-            return render_template("err/register_form_err.html", message=message, err=err)
+            return render_template("err/err_layout.html", message=message, err=err)
 
         # check if username exists
         elif db.execute("SELECT * FROM users WHERE username = ?", username):
             message = "Username already taken :("
             err= "400"
-            return render_template("err/register_form_err.html", message=message, err=err)
+            return render_template("err/err_layout.html", message=message, err=err)
 
         # check password is confirmed
         elif password != passconfirm:
             message = "Password must be the same as confirmation."
             err= "400"
-            return render_template("err/register_form_err.html", message=message, err=err)
+            return render_template("err/err_layout.html", message=message, err=err)
 
 
         # Generate a salt
@@ -196,7 +202,7 @@ def register():
         user_data = db.execute("SELECT * FROM users WHERE username = ?", username)
         session["user_id"] = user_data[0]["id"]
 
-        return redirect("/")
+        return redirect("/saythanks")
 
     # GET -> display form to register
     else:
