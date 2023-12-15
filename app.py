@@ -30,6 +30,7 @@ def checkComments():
     return render_template("comments.html")
 
 @app.route("/messages/api")
+@login_required
 def loadComments():
     messages = db.execute("SELECT * FROM messages ORDER BY date DESC, time DESC")
     return jsonify(messages)
@@ -72,6 +73,12 @@ def myprofile():
     userComments = db.execute("SELECT * FROM messages WHERE user_id=?", session["user_id"])
     print(userData[0])
     return render_template("myprofile.html", userData=userData, userComments=userComments)
+
+@app.route("/myprofile/users/api")
+@login_required
+def loadUsers():
+    users = db.execute("SELECT username FROM users")
+    return jsonify(users)
 
 @app.route("/delete-comment", methods=["POST"])
 @login_required
