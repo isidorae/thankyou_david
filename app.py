@@ -30,7 +30,6 @@ def checkComments():
     return render_template("comments.html")
 
 @app.route("/messages/api")
-@login_required
 def loadComments():
     messages = db.execute("SELECT * FROM messages ORDER BY date DESC, time DESC")
     return jsonify(messages)
